@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nothing</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #fff;
+  }
+  .container {
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  #message {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  #resetBtn {
+    display: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  #resetBtn:hover {
+    background-color: #45a049;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Nothing</h1>
+  <p>Do nothing. If you move your mouse or press a key, you lose.</p>
+  <p id="message">Time doing nothing: 0 seconds</p>
+  <button id="resetBtn" onclick="resetGame()">Reset</button>
+</div>
+
+<script>
+  var startTime = new Date().getTime();
+  var timerInterval;
+  var elapsedTime = 0;
+
+  function updateTimer() {
+    var currentTime = new Date().getTime();
+    elapsedTime = Math.floor((currentTime - startTime) / 1000);
+    document.getElementById("message").textContent = "Time doing nothing: " + elapsedTime + " seconds";
+  }
+
+  timerInterval = setInterval(updateTimer, 1000);
+
+  function gameOver() {
+    clearInterval(timerInterval);
+    document.getElementById("message").textContent = "You moved! Game over. You did nothing for " + elapsedTime + " seconds.";
+    document.getElementById("resetBtn").style.display = "inline";
+  }
+
+  document.addEventListener("mousemove", function() {
+    gameOver();
+  });
+
+  document.addEventListener("keydown", function() {
+    gameOver();
+  });
+
+  function resetGame() {
+    startTime = new Date().getTime();
+    elapsedTime = 0;
+    document.getElementById("resetBtn").style.display = "none";
+    updateTimer();
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+</script>
+</body>
+</html>
